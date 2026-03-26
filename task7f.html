@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Feedback Form</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f2f2f2;
+        }
+
+        .form-container {
+            width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .highlight {
+            border: 2px solid blue;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 10px;
+            width: 100%;
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="form-container">
+    <h2>Feedback Form</h2>
+
+    <input type="text" id="name" placeholder="Enter Name"
+        onkeypress="validateName(event)"
+        onmouseover="highlight(this)"
+        onmouseout="removeHighlight(this)">
+
+    <input type="email" id="email" placeholder="Enter Email"
+        onkeypress="validateEmail(event)"
+        onmouseover="highlight(this)"
+        onmouseout="removeHighlight(this)">
+
+    <textarea id="feedback" placeholder="Enter Feedback"
+        onmouseover="highlight(this)"
+        onmouseout="removeHighlight(this)"></textarea>
+
+    <p id="errorMsg" class="error"></p>
+
+    <button ondblclick="submitForm()">Submit</button>
+</div>
+
+<script>
+    // Highlight functions
+    function highlight(element) {
+        element.classList.add("highlight");
+    }
+
+    function removeHighlight(element) {
+        element.classList.remove("highlight");
+    }
+
+    // Validation functions
+    function validateName(event) {
+        let char = String.fromCharCode(event.keyCode);
+        if (!/[a-zA-Z ]/.test(char)) {
+            event.preventDefault();
+        }
+    }
+
+    function validateEmail(event) {
+        let char = String.fromCharCode(event.keyCode);
+        if (!/[a-zA-Z0-9@._]/.test(char)) {
+            event.preventDefault();
+        }
+    }
+
+    // Reusable validation check
+    function isEmpty(value) {
+        return value.trim() === "";
+    }
+
+    function submitForm() {
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let feedback = document.getElementById("feedback").value;
+        let error = document.getElementById("errorMsg");
+
+        if (isEmpty(name) || isEmpty(email) || isEmpty(feedback)) {
+            error.innerText = "All fields are required!";
+        } else {
+            error.innerText = "";
+            alert("Feedback Submitted Successfully!");
+        }
+    }
+</script>
+
+</body>
+</html>
